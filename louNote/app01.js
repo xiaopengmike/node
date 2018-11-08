@@ -116,8 +116,8 @@ app.post('/login', function (req, res) {
 
 //退出登陆
 app.post('/logout', function (req, res) {
-    req.session.destroy(function(err) {
-        if(err){
+    req.session.destroy(function (err) {
+        if (err) {
             res.json({ret_code: 2, ret_msg: '退出登录失败'});
             return;
         }
@@ -129,8 +129,23 @@ app.post('/logout', function (req, res) {
 
 });
 
-//笔记发布
-app.post('/postNote', function (req, res) {
+//笔记查
+app.get('/liNote', function (req, res) {
+    var username = req.query.username
+    console.log(username);
+
+    Note.find({author: username}, (err, data) => {
+        console.log(err);
+        console.log(data);
+        res.end(JSON.stringify(data))
+    })
+
+
+})
+
+
+//笔记增
+app.post('/addNote', function (req, res) {
     var note = new Note({
         title: req.body.title,
         author: req.body.username,
@@ -148,6 +163,41 @@ app.post('/postNote', function (req, res) {
     });
 });
 
+//笔记删
+app.delete('/delNote', function (req, res) {
+    var noteId = req.body._id
+    console.log(noteId);
+
+    Note.find({_id: noteId}).remove((err, data) => {
+        console.log(err);
+        console.log(data);
+        res.end('delSuc：'+noteId)
+    })
+
+});
+
+//笔记改
+app.put('/editNote', function (req, res) {
+    console.log(req.body);
+
+    var update_where = {_id:req.body._id};//更新条件
+    var update_data = {
+        title: req.body.title,
+        author: req.body.username,
+        tag: req.body.tag,
+        content: req.body.content
+    };//更新数据
+
+    Note.update(update_where,{$set:update_data},function(err){
+        if(err){
+            console.log(err);
+            res.end(err)
+        }else{
+            console.log('更新成功');
+            res.end('update success')
+        }
+    });
+});
 
 app.listen(8081);
 
