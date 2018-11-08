@@ -1,12 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <br>
+    <h1>登陆</h1>
+    <cube-input v-model="value" ></cube-input>
   </div>
 </template>
+<script>
+    export default {
+        components: {
+        },
+        data() {
+            return {
+                value: ''
+            }
+        }
+    }
+</script>
 
 <style lang="scss">
 #app {
