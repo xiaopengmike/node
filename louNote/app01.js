@@ -31,11 +31,11 @@ app.get('/', function (req, res) {
 
 // init使用mongoose存入数据库notes例子
 app.get('/init', function (req, res) {
-    var user = new User({
-        email: '03',
-        username: 'Freewind'
-    });
-    user.save();
+    // var user = new User({
+    //     email: '03',
+    //     username: 'Freewind'
+    // });
+    // user.save();
     res.send('Data放入成功');
 });
 
