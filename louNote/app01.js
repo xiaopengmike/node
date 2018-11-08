@@ -12,6 +12,8 @@ mongoose.connect('mongodb://localhost/notes', (err, db) => {
 });
 
 var app = express();
+app.use(express.static('static'));
+
 app.use(bodyParser.json());
 app.use(session({
     key: 'session',
